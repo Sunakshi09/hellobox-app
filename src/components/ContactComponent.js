@@ -50,10 +50,24 @@ const ContactItem = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  
+  background: white;
+  cursor: pointer;
+  border-bottom: 1px solid #f2f2f2;
+  padding: 15px 10px;
 `;
+
+const PortraitIcon = styled(PortraitImage)`
+  width: 37px;
+  height: 37px;
+`;
+
 const ContactComponentList = () => {
-  return <ContactItem>"ContactComponentList"</ContactItem>;
+  return (
+    <ContactItem>
+      <PortraitIcon src="/portrait/Sunakshi.png" />
+      "ContactComponentList"
+    </ContactItem>
+  );
 };
 const ContactComponent = () => {
   return (

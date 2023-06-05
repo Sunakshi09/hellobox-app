@@ -22,6 +22,7 @@ const PortraitImage = styled.img`
 `;
 const SearchBox = styled.div`
   background: #f6f6f6;
+  display: flex;
   padding: 10px;
 `;
 
@@ -35,8 +36,8 @@ const SearchContainer = styled.div`
 `;
 
 const SearchIcon = styled.img`
-  width: 29px;
-  height: 29px;
+  width: 27px;
+  height: 27px;
 `;
 const SearchInput = styled.input`
   width: 100%;
@@ -49,23 +50,54 @@ const SearchInput = styled.input`
 const ContactItem = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   background: white;
   cursor: pointer;
   border-bottom: 1px solid #f2f2f2;
-  padding: 15px 10px;
+  padding: 15px 12px;
 `;
 
 const PortraitIcon = styled(PortraitImage)`
-  width: 37px;
+  width: 38px;
   height: 37px;
+`;
+
+const ContactInfo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 14px;
+`;
+
+const ContactName = styled.span`
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+`;
+
+const MessageText = styled.span`
+  width: 100%;
+  margin-top: 3px;
+  font-size: 14px;
+  color: #8e8e8e;
+`;
+
+const MessageTime = styled.span`
+  margin-right: 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.42);
 `;
 
 const ContactComponentList = () => {
   return (
     <ContactItem>
       <PortraitIcon src="/portrait/Sunakshi.png" />
-      "ContactComponentList"
+      <ContactInfo>
+        <ContactName>Sunakshi Thapar</ContactName>
+        <MessageText>Hello!</MessageText>
+      </ContactInfo>
+      <MessageTime>03:16 PM</MessageTime>
     </ContactItem>
   );
 };
@@ -81,6 +113,8 @@ const ContactComponent = () => {
           <SearchInput placeholder="Search" />
         </SearchContainer>
       </SearchBox>
+      <ContactComponentList />
+      <ContactComponentList />
       <ContactComponentList />
     </Container>
   );

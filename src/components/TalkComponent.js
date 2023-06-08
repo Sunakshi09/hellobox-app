@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { SearchContainer, SearchInput } from "./ContactComponent";
+import { SearchContainer, SearchInput } from "./ContactListComponent";
+import { messagesList } from "../mockData";
 
 const Container = styled.div`
   display: flex;
@@ -43,13 +44,46 @@ const EmojiImage = styled.img`
   cursor: pointer;
 `;
 
-const TalkComponent = () => {
+const MessageContainer = styled.div`
+  min-height: 86%;
+  background: #e5ddd6;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+`;
+
+const MessageDiv = styled.div`
+  justify-content: ${(props) => (props.isYours ? "flex-end" : "flex-start")};
+  display: flex;
+  margin: 5px 15px;
+`;
+
+const Message = styled.div`
+  background: ${(props) => (props.isYours ? "#b4f2fc" : "white")};
+  max-width: 50%;
+  font-size: 14px;
+  color: #303030;
+  border-radius: 6px;
+  padding: 7px 10px;
+`;
+
+const TalkComponent = (props) => {
+  const { selectedChat } = props;
   return (
     <Container>
       <PortraitHeader>
-        <PortraitImage src="/portrait/Sunakshi.png" />
-        Sunakshi Thapar
+        <PortraitImage src={selectedChat.portraitPic} />
+        {selectedChat.name}
       </PortraitHeader>
+      <MessageContainer>
+        {messagesList.map((messageData) => (
+          <MessageDiv isYours={messageData.senderID === 0}>
+            <Message isYours={messageData.senderID === 0}>
+              {messageData.text}
+            </Message>
+          </MessageDiv>
+        ))}
+      </MessageContainer>
       <ChatBox>
         <SearchContainer>
           <EmojiImage src={"/smiley.jpg"} />

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { contactList } from "../mockData";
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +22,8 @@ const PortraitImage = styled.img`
   border-radius: 50%;
 `;
 const SearchBox = styled.div`
+  display: flex;
+  flex-direction: row;
   background: #f6f6f6;
   padding: 10px;
   width: 97%;
@@ -33,6 +36,7 @@ export const SearchContainer = styled.div`
   border-radius: 16px;
   width: 100%
   padding: 5px 10px;
+  gap: 8px;
 `;
 
 const SearchIcon = styled.img`
@@ -52,22 +56,30 @@ export const SearchInput = styled.input`
 const ContactItem = styled.div`
   display: flex;
   flex-direction: row;
-  background: white;
+  align-items: center;
   cursor: pointer;
   border-bottom: 1px solid #f2f2f2;
   padding: 15px 12px;
+  :hover {
+    background: #ebebeb;
+  }
 `;
 
 const PortraitIcon = styled(PortraitImage)`
   width: 38px;
   height: 37px;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  object-fit: cover;
 `;
 
 const ContactInfo = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 0 14px;
+  margin: 0 12px;
 `;
 
 const ContactName = styled.span`
@@ -91,19 +103,20 @@ const MessageTime = styled.span`
   color: rgba(0, 0, 0, 0.42);
 `;
 
-const ContactComponentList = () => {
+const ContactComponent = (props) => {
+  const { userData, setChat } = props;
   return (
-    <ContactItem>
-      <PortraitIcon src="/portrait/Sunakshi.png" />
+    <ContactItem onClick={() => setChat(userData)}>
+      <PortraitIcon src={userData.portraitPic} />
       <ContactInfo>
-        <ContactName>Sunakshi Thapar</ContactName>
-        <MessageText>Hello!</MessageText>
+        <ContactName>{userData.name}</ContactName>
+        <MessageText>{userData?.lastText}</MessageText>
       </ContactInfo>
-      <MessageTime>03:16 PM</MessageTime>
+      <MessageTime>{userData?.lastTextTime}</MessageTime>
     </ContactItem>
   );
 };
-const ContactComponent = () => {
+const ContactListComponent = (props) => {
   return (
     <Container>
       <PortraitInfoDiv>
@@ -115,10 +128,10 @@ const ContactComponent = () => {
           <SearchInput placeholder="Search" />
         </SearchContainer>
       </SearchBox>
-      <ContactComponentList />
-      <ContactComponentList />
-      <ContactComponentList />
+      {contactList.map((userData) => (
+        <ContactComponent userData={userData} setChat={props.setChat} />
+      ))}
     </Container>
   );
 };
-export default ContactComponent;
+export default ContactListComponent;

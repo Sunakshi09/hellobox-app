@@ -18,14 +18,23 @@ const PortraitHeader = styled.div`
   padding: 11px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
   align-items: center;
 `;
-
+const PortraitInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  background: #add8e6;
+  align-items: center;
+  gap: 10px;
+`;
 const PortraitImage = styled.img`
   width: 33px;
   height: 33px;
   border-radius: 50%;
+`;
+const ContactName = styled.span`
+  font-size: 16px;
+  color: black;
 `;
 
 const ChatBox = styled.div`
@@ -36,13 +45,6 @@ const ChatBox = styled.div`
   padding: 10px;
    bottom: 0;
   align-items: center;
-`;
-const EmojiImage = styled.img`
-  width: 30px;
-  height: 30px;
-  opacity: 0.7;
-  border-radius: 50%;
-  cursor: pointer;
 `;
 
 const MessageContainer = styled.div`
@@ -67,26 +69,50 @@ const Message = styled.div`
   border-radius: 6px;
   padding: 7px 10px;
 `;
+const EmojiImage = styled.img`
+  width: 30px;
+  height: 30px;
+  opacity: 0.8;
+  border-radius: 50%;
+  cursor: pointer;
+`;
 
-const TalkComponent = (props) => {
+function TalkComponent(props) {
   const { selectedChat } = props;
   const [text, setText] = useState("");
   const [pickerVisible, togglePicker] = useState(false);
-  const onEmojiClick = (event, emojiObject) => {
-    setText(text + emojiObject.emoji);
+  const [messageList, setMessageList] = useState(messagesList);
+  const onEmojiClick = (event, emojiObj) => {
+    setText(text + emojiObj.emoji);
     togglePicker(false);
+  };
+  const onEnterPress = (event) => {
+    if (event.key === "Enter") {
+      const messages = [...messageList];
+      messages.push({
+        id: 0,
+        messageType: "TEXT",
+        text,
+        senderID: 0,
+        addedOn: "10:09 PM",
+      });
+      setMessageList(messages);
+      setText("");
+    }
   };
   return (
     <Container>
       <PortraitHeader>
-        <PortraitImage src={selectedChat.portraitPic} />
-        {selectedChat.name}
+        <PortraitInfo>
+          <PortraitImage src={selectedChat.portraitPic} />
+          <ContactName>{selectedChat.name}</ContactName>
+        </PortraitInfo>
       </PortraitHeader>
       <MessageContainer>
-        {messagesList.map((messageData) => (
+        {messageList.map((messageData) => (
           <MessageDiv isYours={messageData.senderID === 0}>
             <Message isYours={messageData.senderID === 0}>
-              {messageData.text}
+              {[messageData.text]}
             </Message>
           </MessageDiv>
         ))}
@@ -95,22 +121,24 @@ const TalkComponent = (props) => {
         <SearchContainer>
           {pickerVisible && (
             <Picker
-              pickerStyle={{ position: "absolute", bottom: "50px" }}
               onEmojiClick={onEmojiClick}
+              pickerStyle={{ position: "absolute", bottom: "55px" }}
             />
           )}
           <EmojiImage
-            src={"/smiley.jpg"}
+            src={"/portrait/smiley.jpg"}
             onClick={() => togglePicker(!pickerVisible)}
           />
           <SearchInput
             placeholder="Type a message"
             value={text}
+            onKeyDown={onEnterPress}
             onChange={(e) => setText(e.target.value)}
           />
         </SearchContainer>
       </ChatBox>
     </Container>
   );
-};
+}
+
 export default TalkComponent;

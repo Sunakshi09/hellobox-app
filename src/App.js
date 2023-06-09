@@ -33,7 +33,7 @@ const ChatPlaceholder = styled.img`
   object-fit: contain;
 `;
 
-function App() {
+function App(props) {
   const [selectedChat, setChat] = useState();
   return (
     <Container>

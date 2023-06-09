@@ -26,7 +26,6 @@ const SearchBox = styled.div`
   flex-direction: row;
   background: #f6f6f6;
   padding: 10px;
-  width: 97%;
 `;
 
 export const SearchContainer = styled.div`
@@ -49,8 +48,7 @@ export const SearchInput = styled.input`
   outline: none;
   border: none;
   font-size: 15px;
-  border-radius: 12px;
-  margin-left: 10px;
+  border-radius: 16px;
 `;
 
 const ContactItem = styled.div`
@@ -109,7 +107,7 @@ const ContactComponent = (props) => {
     <ContactItem onClick={() => setChat(userData)}>
       <PortraitIcon src={userData.portraitPic} />
       <ContactInfo>
-        <ContactName>{userData.name}</ContactName>
+        <ContactName>{userData?.name}</ContactName>
         <MessageText>{userData?.lastText}</MessageText>
       </ContactInfo>
       <MessageTime>{userData?.lastTextTime}</MessageTime>
@@ -124,7 +122,7 @@ const ContactListComponent = (props) => {
       </PortraitInfoDiv>
       <SearchBox>
         <SearchContainer>
-          <SearchIcon src="/portrait/search-icon.jpg" />
+          <SearchIcon src={"/portrait/search-icon.jpg"} />
           <SearchInput placeholder="Search" />
         </SearchContainer>
       </SearchBox>
